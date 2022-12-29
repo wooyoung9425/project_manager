@@ -1,0 +1,56 @@
+.show { visibility:visible !important; opacity: 1 !important; }
+#navigation .submenu-tab { padding-top:12px; }
+.logo-light { filter: brightness(100); }
+.font-white { color:#FFF; }
+.font-bold { font-weight:bold; }
+.alert-table-column { min-height:300px;font-weight:bold;text-align:center;font-size:1.1em;color:#000; }
+.click-target { cursor:pointer; }
+.color_red { color:#FF0000; }
+.color_green { color:#00FF00; }
+.color_orange { color:#FFCB00; }
+body { font-size:1.1em !important; }
+p { font-size:1em !important; }
+.table th, .table td { border-top:none !important;border-bottom:1px solid #EAF0F7; }
+.center { text-align:center !important;margin:0 auto !important; }
+.submenu-tab li { float:left; }
+.title_line th { background-color:#EFEFEF;text-align:center; }
+.title_line td { text-align:center; }
+.font1 { font-size:1px;}
+.font2 { font-size:2px;}
+.font3 { font-size:3px;}
+.font4 { font-size:4px;}
+.font5 { font-size:5px;}
+.font6 { font-size:6px;}
+.font7 { font-size:7px;}
+.font8 { font-size:8px;}
+.font9 { font-size:9px;}
+.font10 { font-size:10px;}
+.font11 { font-size:11px;}
+.font12 { font-size:12px;}
+.font13 { font-size:13px;}
+.font14 { font-size:14px;}
+.font15 { font-size:15px;}
+.font16 { font-size:16px;}
+.font17 { font-size:17px;}
+.font18 { font-size:18px;}
+.font19 { font-size:19px;}
+.font20 { font-size:20px;}
+.font21 { font-size:21px;}
+.bodytext { padding:3px 3px 3px 3px;margin:3px 8px 3px 8px; }
+.bgGray { background-color:#F9F9F9;text-align: center;padding:8px 3px 5px 3px; }
+
+.img-card { position:relative; }
+.img-card img { width:100%;min-width: 60px;max-width: 400px;height:auto; }
+.img-card .xbtn { position:absolute;right:5px;top:1px;cursor:pointer; }
+.imgfile-card { position:relative;float:left;overflow:hidden;background-color:#F9F9F9;padding:5px 5px 5px 5px;border-radius: 3px;margin:2px 2px 2px 2px; }
+.imgfile-card img { border-radius: 3px;cursor:pointer; }
+.imgfile-card .xbtn { position:absolute;right:5px;top:1px;cursor:pointer; }
+
+.w-10 { width:10%; }
+.w-20 { width:20%; }
+.w-30 { width:30%; }
+.w-40 { width:40%; }
+.w-50 { width:50%; }
+.w-60 { width:60%; }
+
+.editor { min-height: 400px; }
