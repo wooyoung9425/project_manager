@@ -100,9 +100,11 @@ const HeaderMolecule = () => {
                             </a> 
                             <ul className="submenu-tab data-msg">
                                 <li><Link to="/msg/email">Email관리</Link></li>
+                                    <li><Link to="/msg/QnAemail">Email 불편사항 관리</Link></li>
                                 <li><Link to="/msg/sms">SMS관리</Link></li>
                             </ul>                           
                         </li>
+                           
                         <li className="main-nav-item">
                             <a href="#" className="navbar-link">
                                 <span data-value="stat" onClick={btnShowMenu}>통계</span>

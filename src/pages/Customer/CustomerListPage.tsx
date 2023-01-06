@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Layout,DataGrid } from '../allcomponents';
+import { Layout,DataGrid } from '../../allcomponents';
 import { useRecoilState, atom } from 'recoil';
-import { ManagerLogin } from '../repositories/accountRepository';
-import { apiHelper } from '../allutils';
-import { ReturnValues } from '../allmodels';
-import { User } from '../alltypes';
+import { ManagerLogin } from '../../repositories/accountRepository';
+import { apiHelper } from '../../allutils';
+import { ReturnValues } from '../../allmodels';
+import { User } from '../../alltypes';
 import { useNavigate } from 'react-router-dom';
 
-function MemberListPage(props:any) {
+function CustomerListPage(props:any) {
     const [manager, setManager] = useRecoilState(ManagerLogin);
     const [isBind, SetIsBind] = useState(false);
     const [list, setList] = useState<User[]>();
@@ -15,13 +15,13 @@ function MemberListPage(props:any) {
 
     const DataBind = () => {
         if (!isBind) {
-            apiHelper.Post("/account/member/list", {}, (rst: ReturnValues<User[]>) => {
-                console.log(rst.data)
-                if (rst.check && rst.data !== null && rst.data !== undefined) {
-                    setList(rst.data);
-                    SetIsBind(true);
-                }
-            });
+            // apiHelper.Post("/account/member/list", {}, (rst: ReturnValues<User[]>) => {
+            //     console.log(rst.data)
+            //     if (rst.check && rst.data !== null && rst.data !== undefined) {
+            //         setList(rst.data);
+            //         SetIsBind(true);
+            //     }
+            // });
         }
     };
 
@@ -64,4 +64,4 @@ function MemberListPage(props:any) {
     );
 };
 
-export default MemberListPage;
+export default CustomerListPage;

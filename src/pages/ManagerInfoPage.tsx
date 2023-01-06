@@ -38,24 +38,6 @@ function ManagerInfoPage(props:any) {
         DataBind();
     }, [isBind]);
 
-    // const onRowClick = (row:any) => {
-    //     navigate(`/member/view/${row.key}`);
-    // };
-
-    const columns = [
-        { key: 'email', name: '이메일', show: true, isKey: true },
-        { key: 'pw', name: '비밀번호', show: true, isKey: true },
-        { key: 'name', name: '이름', show: true, isKey: true },
-        { key: 'phone', name: '연락처', show: true, isKey: true }
-    ]
-    const EditPW = () => {
-        // console.log(newPW)
-        // apiHelper.Post(`/account/member/edit/${user_id}`, {}, (rst: ReturnValues<User[]>) => { 
-        //     if (rst.check && rst.data !== null && rst.data !== undefined) {
-        //         console.log(rst.data)
-        //     }
-        // })  
-    }
     const EditInfo = () => {
         // const body = JSON.stringify({ name: newName, phone: newPhone } )
         if (adminInfo.name === newName ) {

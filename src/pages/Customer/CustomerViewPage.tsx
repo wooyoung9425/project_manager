@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Layout,DataGrid } from '../allcomponents';
+import { Layout,DataGrid } from '../../allcomponents';
 import { useRecoilState, atom } from 'recoil';
-import { ManagerLogin } from '../repositories/accountRepository';
-import { apiHelper, util } from '../allutils';
-import { ReturnValues } from '../allmodels';
-import { User } from '../alltypes';
+import { ManagerLogin } from '../../repositories/accountRepository';
+import { apiHelper, util } from '../../allutils';
+import { ReturnValues } from '../../allmodels';
+import { User } from '../../alltypes';
 import { useNavigate,useParams } from 'react-router-dom';
 
-function MemberViewPage(props:any) {
+function CustomerViewPage(props:any) {
     const [manager, setManager] = useRecoilState(ManagerLogin);
     const [isBind, SetIsBind] = useState(false);
     const [user, setUser] = useState<User>();
@@ -16,12 +16,12 @@ function MemberViewPage(props:any) {
     
     const DataBind = () => {
         if (!isBind) {
-            apiHelper.Post(`/account/member/view/${userid}`, {}, (rst:ReturnValues<User>) => {
-                if (rst.check && rst.data !== null && rst.data !== undefined) {
-                    setUser(rst.data);
-                    SetIsBind(true);
-                }
-            });
+            // apiHelper.Post(`/account/member/view/${userid}`, {}, (rst:ReturnValues<User>) => {
+            //     if (rst.check && rst.data !== null && rst.data !== undefined) {
+            //         setUser(rst.data);
+            //         SetIsBind(true);
+            //     }
+            // });
         }
     };
 
@@ -81,4 +81,4 @@ function MemberViewPage(props:any) {
     );
 };
 
-export default MemberViewPage;
+export default CustomerViewPage;
