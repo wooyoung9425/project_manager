@@ -90,8 +90,8 @@ const HeaderMolecule = () => {
                                 <span data-value="customer" onClick={btnShowMenu}>고객사관리</span>
                             </a> 
                             <ul className="submenu-tab data-customer">
-                                <li><Link to="/customer/list">고객사관리</Link></li>
-                                <li><Link to="/customer/projects">프로젝트관리</Link></li>
+                                <li><Link to="/company/list">고객사관리</Link></li>
+                                <li><Link to="/company/projects">프로젝트관리</Link></li>
                             </ul>                           
                         </li>
                         <li className="main-nav-item">

@@ -11,17 +11,17 @@ function CustomerViewPage(props:any) {
     const [manager, setManager] = useRecoilState(ManagerLogin);
     const [isBind, SetIsBind] = useState(false);
     const [user, setUser] = useState<User>();
-    const { userid } = useParams();
+    const { companyid } = useParams();
     const navigate = useNavigate();
     
     const DataBind = () => {
         if (!isBind) {
-            // apiHelper.Post(`/account/member/view/${userid}`, {}, (rst:ReturnValues<User>) => {
-            //     if (rst.check && rst.data !== null && rst.data !== undefined) {
-            //         setUser(rst.data);
-            //         SetIsBind(true);
-            //     }
-            // });
+            apiHelper.Get(`/company/view/${companyid}`, {}, (rst:ReturnValues<User>) => {
+                if (rst.check && rst.data !== null && rst.data !== undefined) {
+                    setUser(rst.data);
+                    SetIsBind(true);
+                }
+            });
         }
     };
 
@@ -41,7 +41,7 @@ function CustomerViewPage(props:any) {
                 <div className="col-3">
                     <div className="card">
                         <div className="card-body">
-                            <label>회원명:</label>
+                            <label>회사명:</label>
                             <p>{user?.name}</p>
                         </div>
                     </div>

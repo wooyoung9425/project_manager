@@ -25,12 +25,12 @@ function App() {
         <Route path="/member/view/:userid" element={<MemberView/>}/>
         <Route path="/member/confirm" element={<MemberConfirm />} />
         {/* 고객사 */}
-        <Route path="/customer" element={<CustomerListPage/>}/>
-        <Route path="/customer/list" element={<CustomerListPage />} />
-        <Route path="/customer/list/:customerid" element={<CustomerView />} />
-        <Route path="/customer/add/:" element={<CustomerAdd/>}/>
-        <Route path="/customer/projects" element={<CustomerProject />} />
-        <Route path="/customer/projects/:projectid" element={<ProjectView />} />
+        <Route path="/company" element={<CustomerListPage/>}/>
+        <Route path="/company/list" element={<CustomerListPage />} />
+        <Route path="/company/view/:companyid" element={<CustomerView />} />
+        <Route path="/company/add/:" element={<CustomerAdd/>}/>
+        <Route path="/company/projects" element={<CustomerProject />} />
+        <Route path="/company/projects/:projectid" element={<ProjectView />} />
         {/* 메세지 */}
         <Route path="/msg" element={<MessageEmailList/>}/>
         <Route path="/msg/email" element={<MessageEmailList />} />

@@ -15,13 +15,13 @@ function CustomerListPage(props:any) {
 
     const DataBind = () => {
         if (!isBind) {
-            // apiHelper.Post("/account/member/list", {}, (rst: ReturnValues<User[]>) => {
-            //     console.log(rst.data)
-            //     if (rst.check && rst.data !== null && rst.data !== undefined) {
-            //         setList(rst.data);
-            //         SetIsBind(true);
-            //     }
-            // });
+            apiHelper.Get("/company/list", {}, (rst: ReturnValues<User[]>) => {
+                console.log(rst)
+                if (rst.check && rst.data !== null && rst.data !== undefined) {
+                    setList(rst.data);
+                    SetIsBind(true);
+                }
+            });
         }
     };
 
@@ -41,11 +41,11 @@ function CustomerListPage(props:any) {
     ];
 
     const onRowClick = (row:any) => {
-        navigate(`/member/view/${row.key}`);
+        navigate(`/company/view/${row.key}`);
     };
 
     return (
-        <Layout section="Member" title="회원목록">
+        <Layout section="Company" title="회사목록">
              <div className="row">
                 <div className="col-12">
                     <div className="card">
