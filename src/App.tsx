@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import {
   Login, Main,
   MemberList, MemberView, ManagerInfoPage, MemberConfirm,
-  CustomerListPage, CustomerView, CustomerAdd, CustomerProject, ProjectView,
+  CompanyListPage, CompanyView, CompanyAdd, CompanyProject, ProjectView,
   MessageEmailList, MessageEmailNew, MesseageEmailView,
   QnAEmailList, MesseageQnaView,
   MessageSMSList, MesseageSMSView,
@@ -25,11 +25,11 @@ function App() {
         <Route path="/member/view/:userid" element={<MemberView/>}/>
         <Route path="/member/confirm" element={<MemberConfirm />} />
         {/* 고객사 */}
-        <Route path="/company" element={<CustomerListPage/>}/>
-        <Route path="/company/list" element={<CustomerListPage />} />
-        <Route path="/company/view/:companyid" element={<CustomerView />} />
-        <Route path="/company/add/:" element={<CustomerAdd/>}/>
-        <Route path="/company/projects" element={<CustomerProject />} />
+        <Route path="/company" element={<CompanyListPage/>}/>
+        <Route path="/company/list" element={<CompanyListPage />} />
+        <Route path="/company/view/:companyid" element={<CompanyView />} />
+        <Route path="/company/add/:" element={<CompanyAdd/>}/>
+        <Route path="/company/projects" element={<CompanyProject />} />
         <Route path="/company/projects/:projectid" element={<ProjectView />} />
         {/* 메세지 */}
         <Route path="/msg" element={<MessageEmailList/>}/>

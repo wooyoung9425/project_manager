@@ -8,11 +8,11 @@ import MemberList from "./pages/Member/MemberListPage";
 import MemberView from "./pages/Member/MemberViewPage";
 import MemberConfirm from "./pages/Member/MemberConfirm";
 //고객사
-import CustomerListPage from "./pages/Customer/CustomerListPage";
-import CustomerAdd from "./pages/Customer/CustomerAdd";
-import CustomerProject from "./pages/Customer/CustomerProject";
-import CustomerView from "./pages/Customer/CustomerViewPage";
-import ProjectView from "./pages/Customer/ProjectViewPage";
+import CompanyListPage from "./pages/Company/CompanyListPage";
+import CompanyAdd from "./pages/Company/CompanyAdd";
+import CompanyProject from "./pages/Company/CompanyProject";
+import CompanyView from "./pages/Company/CompanyViewPage";
+import ProjectView from "./pages/Company/ProjectViewPage";
 //메세지
 import MessageEmailList from "./pages/Message/MessageEmailList";
 import MesseageEmailView from "./pages/Message/MesseageEmailViewPage";
@@ -35,10 +35,10 @@ export {
     MemberView,
     MemberConfirm,
     //고객사
-    CustomerListPage,
-    CustomerView,
-    CustomerAdd,
-    CustomerProject,
+    CompanyListPage,
+    CompanyView,
+    CompanyAdd,
+    CompanyProject,
     ProjectView,
     //메세지
     MessageEmailList,
