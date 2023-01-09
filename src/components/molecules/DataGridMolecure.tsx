@@ -36,6 +36,7 @@ const DataGridMolecure = (props:any) => {
     const [cols, setCols] = useState(columns);
     const [item, setItems] = useState(data);
     const [pageNo, SetPageNo] = useState(1);
+    const [sortCheck,setSortCheck]=useState(true)
 
     StyleClass = (props.fontsize !== null && props.fontsize !== undefined) ? `font${props.fontsize}` : "";
 
@@ -184,99 +185,132 @@ const DataGridMolecure = (props:any) => {
             onBtnDeleteHandler = props.onDelete;
         }
     }, [columns, data]);
+    const table_sort = (row_name: string) => {
+        console.log(row_name)
+        if (sortCheck === true) {
+            item.sort((obj1, obj2) => {
+                if (obj1[row_name] > obj2[row_name]) {
+                    return 1
+                }
+                if (obj1[row_name] < obj2[row_name]) {
+                    return -1
+                }
+                return 0;
+            })
+            setSortCheck(false)
+        } else {
+            item.sort((obj1, obj2) => {
+                if (obj1[row_name] < obj2[row_name]) {
+                    return 1
+                }
+                if (obj1[row_name] > obj2[row_name]) {
+                    return -1
+                }
+                return 0;
+            })
+            setSortCheck(true)
+        }
+    }
 
     return (
-<>
-<div className="table-responsive-sm list">
-<table className="table mb-0">
-<caption>
-TotalCount : {option.totalCount}
-</caption>
-<thead>
-<tr>
-{
-    (option.isSeq) ? <th className={StyleClass} scope="col" key={ `column_0` }>no</th> : null
-}
-{
-    columns.map((column, index) => {
-        return ((column.show) ? <th className={StyleClass} scope="col" key={ `column_${index}` }>{column.name}</th> : null)
-    })
-}
-{
-    (props.onDelete !== null && props.onDelete !== undefined)
-    ?<th>기능</th>
-    :<></>
-}
-</tr>
-</thead>
-<tbody>
-{
-    (list !== null && list !== undefined && list.length > 0) ?
-    list.map((item, index) => {
-        return (
-            <tr key={ `row_${index}` } data-value={item[getKeyFieldName()]} onClick={btnClickEventHandler} style={{ cursor : "pointer" }}>
-            {
-                (option.isSeq) ? <td className={StyleClass} key={ `row_col_0` }>{option.maxCount() - index}</td> : null
-            }
-            {
-                columns.map((col, subindex) => {
-                    return (typeof item[col.key] === "boolean" && col.on !== null && col.off !== null && col.on !== undefined && col.off !== undefined) ? 
-                    (<td className={StyleClass} key={ `row_col_${subindex}` }>{((item[col.key]) ? col.on:col.off)}</td>)
-                    : ((col.show) ? <td className={StyleClass} key={ `row_col_${subindex}` }>
-                    {(col.key.indexOf('.') > -1) ? JsonIndex(item, col.key) : item[col.key]}
-                    </td> : null);
-                })
-            }
-            {
-                (props.onDelete !== null && props.onDelete !== undefined)
-                ?<td>
-                    <button type="button" onClick={btnDeleteEventHandler} className="btn btn-danger">삭제</button>
-                </td>
-                :<></>
-            }
-            </tr>
-        )
-    })
-    :
-    <tr>
-        <td colSpan={50} className="center" style={{ height:"200px" }}>
-            Data is Empty.
-        </td>
-    </tr>
-}
-</tbody>
-</table>
-</div>
-<div className="row" style={ { marginTop:"-45px" } }><div className="col-12">
-<nav aria-label="Page navigation example">
-    <ul className="pagination" style={ { float:"right" } }>
-        <li className="page-item">
-            <button className="page-link" aria-label="Previous" onClick={previousPageMove}>
-                <span aria-hidden="true">&laquo;</span>
-                <span className="sr-only">Previous</span>
-            </button>
-        </li>
+        <>
+        <div className="table-responsive-sm list">
+        <table className="table mb-0">
+        <caption>
+        TotalCount : {option.totalCount}
+        </caption>
+        <thead>
+        <tr>
         {
-            option.getPages().map((n, idx) => {
-                return (
-                    (n === option.curpage) ? 
-                <li className="page-item active" key={`page_${idx}`}><button className="page-link" data-page={n} onClick={gotoPageMove}>{n}</button></li>
-                    :
-                <li className="page-item" key={`page_${idx}`}><button className="page-link" data-page={n} onClick={gotoPageMove}>{n}</button></li>
-                )
+            (option.isSeq) ?
+                <th className={StyleClass} scope="col" key={`column_0`}>no            
+                </th> : null
+        }
+        
+        {
+            columns.map((column, index) => {
+                return ((column.show) ? <th className={StyleClass} scope="col" key={`column_${index}`}>{column.name}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-caret-down-fill" viewBox="0 0 16 16" onClick={() => table_sort(column.key)}>
+                            {sortCheck ? <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" /> : <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />}
+                    </svg>
+                </th> : null)
             })
         }
-        <li className="page-item">
-            <button className="page-link" aria-label="Next" onClick={nextPageMove}>
-                <span aria-hidden="true">&raquo;</span>
-                <span className="sr-only">Next</span>
-            </button>
-        </li>
-    </ul>
-</nav>
-</div>
-</div>
-</>
+        {
+            (props.onDelete !== null && props.onDelete !== undefined)
+            ?<th>기능</th>
+            :<></>
+        }
+        </tr>
+        </thead>
+        <tbody>
+        {
+            (list !== null && list !== undefined && list.length > 0) ?
+            list.map((item, index) => {
+                return (
+                    <tr key={ `row_${index}` } data-value={item[getKeyFieldName()]} onClick={btnClickEventHandler} style={{ cursor : "pointer" }}>
+                    {
+                        (option.isSeq) ? <td className={StyleClass} key={ `row_col_0` }>{option.maxCount() - index}</td> : null
+                    }
+                    {
+                        columns.map((col, subindex) => {
+                            return (typeof item[col.key] === "boolean" && col.on !== null && col.off !== null && col.on !== undefined && col.off !== undefined) ? 
+                            (<td className={StyleClass} key={ `row_col_${subindex}` }>{((item[col.key]) ? col.on:col.off)}</td>)
+                            : ((col.show) ? <td className={StyleClass} key={ `row_col_${subindex}` }>
+                            {(col.key.indexOf('.') > -1) ? JsonIndex(item, col.key) : item[col.key]}
+                            </td> : null);
+                        })
+                    }
+                    {
+                        (props.onDelete !== null && props.onDelete !== undefined)
+                        ?<td>
+                            <button type="button" onClick={btnDeleteEventHandler} className="btn btn-danger">삭제</button>
+                        </td>
+                        :<></>
+                    }
+                    </tr>
+                )
+            })
+            :
+            <tr>
+                <td colSpan={50} className="center" style={{ height:"200px" }}>
+                    Data is Empty.
+                </td>
+            </tr>
+        }
+        </tbody>
+        </table>
+        </div>
+        <div className="row" style={ { marginTop:"-45px" } }><div className="col-12">
+        <nav aria-label="Page navigation example">
+            <ul className="pagination" style={ { float:"right" } }>
+                <li className="page-item">
+                    <button className="page-link" aria-label="Previous" onClick={previousPageMove}>
+                        <span aria-hidden="true">&laquo;</span>
+                        <span className="sr-only">Previous</span>
+                    </button>
+                </li>
+                {
+                    option.getPages().map((n, idx) => {
+                        return (
+                            (n === option.curpage) ? 
+                        <li className="page-item active" key={`page_${idx}`}><button className="page-link" data-page={n} onClick={gotoPageMove}>{n}</button></li>
+                            :
+                        <li className="page-item" key={`page_${idx}`}><button className="page-link" data-page={n} onClick={gotoPageMove}>{n}</button></li>
+                        )
+                    })
+                }
+                <li className="page-item">
+                    <button className="page-link" aria-label="Next" onClick={nextPageMove}>
+                        <span aria-hidden="true">&raquo;</span>
+                        <span className="sr-only">Next</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+        </div>
+        </div>
+        </>
     );
 };
 

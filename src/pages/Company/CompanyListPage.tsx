@@ -30,13 +30,12 @@ function CompanyListPage(props:any) {
     }, [isBind]);
 
     const columns = [
-        { key: 'id', name: 'ID', show:false, isKey:true },
-        { key: 'name', name: '이름', show:true, isKey:false },
+        { key: 'id', name: 'ID', show:false, isKey:false },
+        { key: 'name', name: '회사명', show:true, isKey:false },
+        { key: 'admin', name: '담당자', show:true, isKey:false },
+        { key: 'businessRegNo', name: '사업자번호', show:true, isKey:false },
         { key: 'phone', name: '연락처', show:true, isKey:false },
-        { key: 'avatar', name: '프로필', show:true, isKey:false },
-        { key: 'role', name: '등급', show:true, isKey:false },
-        { key: 'createdAt', name: '생성일', show:true, isKey:false },
-        { key: 'companyId', name: '소속', show:true, isKey:false },
+        { key: 'price', name: '요금제', show:true, isKey:false },
         { key: 'isConfirm', name: '승인여부', show:true, isKey:false, on:"승인", off:"미승인" }
     ];
 
