@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { Layout } from '../../allcomponents';
-function CustomerAdd(props: any) {
+function CompanyAdd(props: any) {
     const [isBind, SetIsBind] = useState(false);
     return (
         <Layout section="Member" title="회원목록">
@@ -22,4 +22,4 @@ function CustomerAdd(props: any) {
         </Layout>
   )
 }
-export default CustomerAdd;
+export default CompanyAdd;

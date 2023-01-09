@@ -7,7 +7,7 @@ import { ReturnValues } from '../../allmodels';
 import { User } from '../../alltypes';
 import { useNavigate } from 'react-router-dom';
 
-function CustomerListPage(props:any) {
+function CompanyListPage(props:any) {
     const [manager, setManager] = useRecoilState(ManagerLogin);
     const [isBind, SetIsBind] = useState(false);
     const [list, setList] = useState<User[]>();
@@ -64,4 +64,4 @@ function CustomerListPage(props:any) {
     );
 };
 
-export default CustomerListPage;
+export default CompanyListPage;

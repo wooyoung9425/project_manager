@@ -87,9 +87,9 @@ const HeaderMolecule = () => {
                         </li>
                         <li className="main-nav-item">
                             <a href="#" className="navbar-link">
-                                <span data-value="customer" onClick={btnShowMenu}>고객사관리</span>
+                                <span data-value="company" onClick={btnShowMenu}>고객사관리</span>
                             </a> 
-                            <ul className="submenu-tab data-customer">
+                            <ul className="submenu-tab data-company">
                                 <li><Link to="/company/list">고객사관리</Link></li>
                                 <li><Link to="/company/projects">프로젝트관리</Link></li>
                             </ul>                           

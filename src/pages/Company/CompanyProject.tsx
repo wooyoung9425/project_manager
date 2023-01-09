@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { Layout } from '../../allcomponents';
-function CustomerProject(props: any) {
+function CompanyProject(props: any) {
     const [isBind, SetIsBind] = useState(false);
     return (
         <Layout section="Member" title="회원목록">
@@ -22,4 +22,4 @@ function CustomerProject(props: any) {
         </Layout>
   )
 }
-export default CustomerProject;
+export default CompanyProject;
