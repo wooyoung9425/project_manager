@@ -28,7 +28,7 @@ function App() {
         <Route path="/company" element={<CompanyListPage/>}/>
         <Route path="/company/list" element={<CompanyListPage />} />
         <Route path="/company/view/:companyid" element={<CompanyView />} />
-        <Route path="/company/add/:" element={<CompanyAdd/>}/>
+        <Route path="/company/add" element={<CompanyAdd/>}/>
         <Route path="/company/projects" element={<CompanyProject />} />
         <Route path="/company/projects/:projectid" element={<ProjectView />} />
         {/* 메세지 */}
