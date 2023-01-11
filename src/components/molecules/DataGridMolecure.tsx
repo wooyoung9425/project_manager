@@ -247,6 +247,13 @@ const DataGridMolecure = (props:any) => {
         {
             (list !== null && list !== undefined && list.length > 0) ?
             list.map((item, index) => {
+                if (item.masterID === "2") {
+                    item={...item, ['payment']: "베이직"}
+                } else if (item.masterID === "3") {
+                    item={...item, ['payment']: "프리미엄"}
+                } else {
+                    item = {...item, ['payment']:"미정"}
+                }
                 return (
                     <tr key={ `row_${index}` } data-value={item[getKeyFieldName()]} onClick={btnClickEventHandler} style={{ cursor : "pointer" }}>
                     {
@@ -254,6 +261,7 @@ const DataGridMolecure = (props:any) => {
                     }
                     {
                         columns.map((col, subindex) => {
+                            
                             return (typeof item[col.key] === "boolean" && col.on !== null && col.off !== null && col.on !== undefined && col.off !== undefined) ? 
                             (<td className={StyleClass} key={ `row_col_${subindex}` }>{((item[col.key]) ? col.on:col.off)}</td>)
                             : ((col.show) ? <td className={StyleClass} key={ `row_col_${subindex}` }>

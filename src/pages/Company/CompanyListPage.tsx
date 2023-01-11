@@ -11,7 +11,9 @@ import { Button } from 'antd';
 function CompanyListPage(props:any) {
     const [manager, setManager] = useRecoilState(ManagerLogin);
     const [isBind, SetIsBind] = useState(false);
+    const [priceBind, setPriceBind] = useState(false);
     const [list, setList] = useState<User[]>();
+    const [priceList,setPriceList]=useState<any[]>()
     const navigate = useNavigate();
 
     const DataBind = () => {
@@ -28,20 +30,29 @@ function CompanyListPage(props:any) {
 
     useEffect(function() {
         DataBind();
+        if (!priceBind) {
+            apiHelper.Get("/payment/master/list", {}, (rst: ReturnValues<User[]>) => {
+                if (rst.check && rst.data !== null && rst.data !== undefined) {
+                    setPriceList(rst.data)
+                    setPriceBind(true);
+                }
+            });
+        }
+            
     }, [isBind]);
 
     const columns = [
-        { key: 'id', name: 'ID', show:false, isKey:false },
+        { key: 'id', name: 'ID', show:false, isKey:true },
         { key: 'name', name: '회사명', show:true, isKey:false },
         { key: 'employee', name: '담당자', show:true, isKey:false },
         { key: 'businessRegNo', name: '사업자번호', show:true, isKey:false },
         { key: 'phone', name: '연락처', show:true, isKey:false },
-        { key: 'masterID', name: '요금제', show:true, isKey:false },
+        { key: 'masterID', name: '요금ID', show: false, isKey: false},
+        { key: 'payment', name: '요금제', show:true, iskey:false},
         { key: 'isAccept', name: '승인여부', show: true, isKey: false, on: "승인", off: "미승인" },
-        { key: 'delete', name: '삭제', show: true, isKey: false}
     ];
 
-    const onRowClick = (row:any) => {
+    const onRowClick = (row: any) => {
         navigate(`/company/view/${row.key}`);
     };
 

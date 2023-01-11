@@ -11,7 +11,10 @@ function CompanyAdd(props: any) {
     const navigate = useNavigate();
     const [company, setCompany] = useState<Company>({
         name: "", phone: "", businessRegNo: "", addr1: "",
-        addr2: "", masterID: 0, employee: "", isAccept: false});
+        addr2: "", masterID: 0, employee: "", isAccept: false
+    });
+    
+    // 고객서 추가 api연결
     const registCompany = () => {
         console.log(company)
         if (!isBind) {
@@ -25,6 +28,8 @@ function CompanyAdd(props: any) {
             });
         }
     }
+
+    // 고객사 정보 입력시 정보입력
     const onChangeList = (row_name: string, res: any) => {
         if (row_name === 'masterID') {
             setCompany({...company, [row_name]:Number(res.target.value)})
@@ -33,7 +38,10 @@ function CompanyAdd(props: any) {
         }
 
     }
-    
+    // 목록보기로 페이지 이동
+    const btnList = () => {
+        navigate('/company/list')
+    }
     return (
         <Layout section="Company" title="회사 추가">
             <div className="row">
@@ -51,7 +59,7 @@ function CompanyAdd(props: any) {
                                 <div className="col-2">
                                     <span className="input-group-text" id="inputGroup-sizing-lg" style={{"fontSize":"18px"}}>회사명</span></div>
                                 <div className="col-6">
-                                        <input type="text" className="form-control" onChange={ (e:any)=>onChangeList("name", e)} aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
+                                    <input type="text" className="form-control" onChange={ (e:any)=>onChangeList("name", e)} aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                 </div>
                             </div>
                             <div className="input-group input-group-lg" style={{"marginBottom": "20px"}}>
@@ -108,7 +116,7 @@ function CompanyAdd(props: any) {
                                 <div className="col-2">
                                     <span className="input-group-text" id="inputGroup-sizing-lg" style={{ "fontSize": "18px" }}>요금제</span></div>
                                 <div className="col-6">
-                                    <select className="form-select form-select-lg mb-3" onChange={ (e:any)=>onChangeList("materID", e)} aria-label="Default select example" style={{ "fontSize": "18px", width:"650px", height: "40px", marginTop:"5px", borderRadius:"10px"}}>
+                                    <select className="form-select form-select-lg mb-3" onChange={ (e:any)=>onChangeList("masterID", e)} aria-label="Default select example" style={{ "fontSize": "18px", width:"650px", height: "40px", marginTop:"5px", borderRadius:"10px"}}>
                                         <option selected>요금제 선택</option>
                                         <option value="2"> 베이직 </option>
                                         <option value="3"> 프리미엄  </option>
@@ -120,6 +128,10 @@ function CompanyAdd(props: any) {
                                     <div className='col-8'>
                                         <button type="button" className="btn btn-outline-primary btn-lg" onClick={ registCompany} style={{ margin: "10px", width:"100%", fontSize:"20px"}}> Submit </button>
                                     </div>
+                                    <div className='col-2'>
+                                        <button type="button" className="btn btn-primary" onClick={btnList} style={{ margin: "10px",fontSize:"15px"}}>목록보기</button>
+                                    </div>
+                                    
                                 </div>
                         </div>   
                     </div>
