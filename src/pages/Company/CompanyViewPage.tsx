@@ -6,13 +6,18 @@ import { apiHelper, util } from '../../allutils';
 import { ReturnValues } from '../../allmodels';
 import { User, Company } from '../../alltypes';
 import { useNavigate,useParams } from 'react-router-dom';
-import { listenerCount } from 'process';
+import messageBox from '../../utility/MessageBox';
+
 
 function CompanyViewPage(props:any) {
     const [manager, setManager] = useRecoilState(ManagerLogin);
     const [isBind, SetIsBind] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
-    const [company, setCompany] = useState<Company>();
+    const [company, setCompany] = useState<Company>({
+        name: "", phone: "", businessRegNo: "", addr1: "",
+        addr2: "", masterID: 0, employee: "", isAccept: false
+    });
+    // const [company, setCompany] = useState<Company>();
     const { companyid } = useParams();
     const navigate = useNavigate();
     const [price, setPrice] = useState<String>()
@@ -51,19 +56,46 @@ function CompanyViewPage(props:any) {
         navigate("/company/list");
     };
     const companyEdit = () => {
+        // console.log(isEdit)
         if (isEdit === true) {
             setIsEdit(false)
+            apiHelper.Post('/company/update', company, (rst: ReturnValues<any>) => {
+                if (rst.check === true) {
+                    messageBox.Success('수정되었습니다.',()=>navigate('/company/list'))
+                }
+            })
         } else {
             setIsEdit(true)
         }
     }
-    const onChangeEdit = () => {
+    const onChangeEdit = (row_name:string, res:any) => {
+        if (row_name === 'masterID') {
+            setCompany({...company, [row_name]:Number(res.target.value)})
+        } else if (row_name === 'isAccept') {
+            setCompany({...company, [row_name]:Boolean(Number(res.target.value))})
+        } else {
+            setCompany({...company, [row_name]:res.target.value})
+        }
+    }
+    const companyDelete = () => {
+        messageBox.Confirm("삭제하시겠습니까?", deleteapi)
+        
+        function deleteapi() {
+            apiHelper.Post(`/company/erase`, { id: Number(companyid) }, (rst: ReturnValues<any>) => {
+                console.log(company, Number(companyid))
+                console.log(rst.check)
+                if (rst.check === true) {
+                    messageBox.Success("삭제되었습니다.", ()=>navigate("/company/list"));
+                }
+            });
+        }
         
     }
-
+            
+    
     //bootstrap의 기본 구성 요소인 row, col 에 개념은 인터넷에서 bootstrap grid 로 검색해서 참고하세요
     return (
-        <Layout section="Member" title="회원상세">
+        <Layout section="Member" title="고객사 상세">
              <div className="row">
                 <div className="col-12">
                     <div className="card">
@@ -77,7 +109,7 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={company?.name} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <input type="text" placeholder={company?.name} onChange={ onChangeEdit} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
+                                            <input type="text" placeholder={company?.name} onChange={ (e:any)=>onChangeEdit("name",e)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                         }
                                         
                                     </div>
@@ -102,7 +134,7 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={company?.employee} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <input type="text" placeholder={company?.employee} onChange={onChangeEdit} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
+                                            <input type="text" placeholder={company?.employee} onChange={(e:any)=>onChangeEdit("employee",e)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                         }
                                     </div>
                                 </div>
@@ -116,7 +148,7 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={company?.phone} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <input type="text" placeholder={company?.phone} onChange={onChangeEdit} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
+                                            <input type="text" placeholder={company?.phone} onChange={(e:any)=>onChangeEdit("phone",e)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                         }
                                         
                                     </div>
@@ -131,7 +163,7 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={company?.addr1} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <input type="text" placeholder={company?.addr1} onChange={onChangeEdit} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
+                                            <input type="text" placeholder={company?.addr1} onChange={(e:any)=>onChangeEdit("addr1",e)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                         }
                                     </div>
                                 </div>
@@ -145,7 +177,7 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={company?.addr2} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <input type="text" placeholder={company?.addr2} onChange={onChangeEdit} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
+                                            <input type="text" placeholder={company?.addr2} onChange={(e:any)=>onChangeEdit("addr2",e)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                         }
                                     </div>
                                 </div>
@@ -159,7 +191,7 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={String(price)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <select className="form-select form-select-lg mb-3" onChange={ onChangeEdit} aria-label="Default select example" style={{ "fontSize": "18px", width:"650px", height: "40px", marginTop:"5px", borderRadius:"10px"}}>
+                                            <select className="form-select form-select-lg mb-3" onChange={ (e:any)=>onChangeEdit("masterID",e)} aria-label="Default select example" style={{ "fontSize": "18px", width:"650px", height: "40px", marginTop:"5px", borderRadius:"10px"}}>
                                                 <option selected>요금제 선택</option>
                                                 <option value="2"> 베이직 </option>
                                                 <option value="3"> 프리미엄  </option>
@@ -177,10 +209,10 @@ function CompanyViewPage(props:any) {
                                         {!isEdit ?
                                             <input type="text" value={String(accept)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} />
                                             :
-                                            <select className="form-select form-select-lg mb-3" onChange={ onChangeEdit} aria-label="Default select example" style={{ "fontSize": "18px", width:"650px", height: "40px", marginTop:"5px", borderRadius:"10px"}}>
+                                            <select className="form-select form-select-lg mb-3" onChange={ (e:any)=>onChangeEdit("isAccept",e)} aria-label="Default select example" style={{ "fontSize": "18px", width:"650px", height: "40px", marginTop:"5px", borderRadius:"10px"}}>
                                                 <option selected>승인 여부</option>
-                                                <option value="true"> 승인 </option>
-                                                <option value="false"> 미승인  </option>
+                                                <option value="1"> 승인 </option>
+                                                <option value="0"> 미승인  </option>
                                             </select>
                                         }
                                         {/* <input type="text" value={String(accept)} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" style={{ "fontSize": "18px" }} /> */}
@@ -197,7 +229,9 @@ function CompanyViewPage(props:any) {
                                         </button>
                                     </div>
                                     <div className='col-4'>
-                                        <button type="button" className="btn btn-outline-primary btn-lg" style={{ margin: "10px", width:"100%", fontSize:"20px"}}> 삭제 </button>
+                                        <button type="button" className="btn btn-outline-primary btn-lg" style={{ margin: "10px", width: "100%", fontSize: "20px" }} onClick={companyDelete}>
+                                            삭제
+                                        </button>
                                     </div>
                                     
                                     </>

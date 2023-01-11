@@ -61,7 +61,7 @@ function CompanyListPage(props:any) {
     }
 
     return (
-        <Layout section="Company" title="회사목록">
+        <Layout section="Company" title="고객사 관리">
             <div className="row">
                 <div className="col-11"></div>
                 <div className="col-1"> <button type="button" className="btn btn-outline-primary btn-lg" onClick={CompanyAdd} style={{margin:"10px"}}> 추가 </button></div>
