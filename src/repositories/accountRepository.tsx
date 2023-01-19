@@ -5,4 +5,9 @@ var ManagerLogin = atom({
     default:{}
 });
 
-export { ManagerLogin }
+var projectType = atom({
+    key: "projectType",
+    default: {}
+})
+
+export { ManagerLogin, projectType }
