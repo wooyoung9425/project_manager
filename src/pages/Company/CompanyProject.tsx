@@ -4,37 +4,39 @@ import { User, Company } from '../../alltypes';
 import { apiHelper, messageBox } from '../../allutils';
 import { useNavigate } from 'react-router-dom';
 import { ReturnValues } from '../../allmodels';
-import { Select } from 'antd';
+import { Select, DatePicker  } from 'antd';
 import moment from 'moment';
-import { render } from '@testing-library/react';
 
 function CompanyProject(props: any) {
-
+    //isBind: 회사list , isCompany: 회사 선택, isProject: 프로젝트 select, isALL : 프로젝트 select 전체 
     const [isBind, SetIsBind] = useState(false);
     const [isCompany, setIsCompany] = useState(false)
-    const [isProject, setIsProject]=useState(false)
+    const [isProject, setIsProject] = useState(false)
+    const [isALL,setIsALL]=useState<boolean>(false)
 
-    const [companyList, setCompanyList] = useState<Company[]>()
+    
+    // 회사 선택 select의 option
     const [searchCompany, setSearchCompany] = useState<any[]>()
+
     // 프로젝트 관리페이지 목록
     const [projectList, setProjectList] = useState<any[]>()
-    const[test, setTest]=useState<any[]>()
+    const [selectList, setSelectList]=useState<any[]>()
     const [list, setList] = useState<any[]>();
-    const [selectProject,setSelectProject]=useState<any[]>()
     const [selectedOptions, setSelectedOptions] = useState()
     const [optionList, setOptionList] = useState<any>()
     const [ProjectNameList,setProjectNameList]=useState<any[]>()
-    
+
     const navigate = useNavigate();
+
     useEffect(function () {
         CompanyList()
-     }, [isBind, isCompany,test]);
+        change()
+     }, [isBind, isCompany,selectList,isALL]);
     
     //회사 리스트 및 회사 검색을 위한 select 회사 리스트
     const CompanyList = () => {
         apiHelper.Get('/company/list', {}, (rst: ReturnValues<any[]>) => {
             if (rst.check && rst.data !== null && rst.data !== undefined) {
-                setCompanyList(rst.data)
                 const tmpList: any = []
                 rst.data.map((item: any) => {
                     tmpList.push({ value: item.id, label: item.name })
@@ -50,8 +52,18 @@ function CompanyProject(props: any) {
         setSelectedOptions(data)
     }
 
+    // select별 프로젝트 list처리
     const change = () => {
-        setTest(selectProject)
+        if (isProject === true) {
+            setIsProject(false)
+            setList(selectList)
+        } else {
+            if (isALL === true) {
+                setIsProject(true)
+                setSelectList(projectList)
+            }
+        }
+        
     }
 
     //회사 검색했을때 해당 회사의 프로젝트 리스트 불러오기
@@ -60,7 +72,6 @@ function CompanyProject(props: any) {
             setIsCompany(false)
         } 
         apiHelper.Get(`/project/list/company/${Number(selectedOptions)}`, {}, (rst: ReturnValues<any[]>) => { 
-            console.log(rst)
             if (rst.check && rst.data !== null && rst.data !== undefined) {
                 setIsCompany(true)
                 let projecttmp: any[] = rst.data
@@ -78,13 +89,14 @@ function CompanyProject(props: any) {
                 setList(projecttmp)
                 setProjectList(projecttmp)
                 setProjectNameList(projectName)
-                setCompanyList(projecttmp)
             }
         })
     }
-     const onRowClick = (row: any) => {
+
+    const onRowClick = (row: any) => {
         navigate(`/company/projects/${row.key}`);
     };
+
     const columns = [
         { key: 'id', name: 'ID', show:false, isKey:true },
         { key: 'title', name: '프로젝트명', show:true, isKey:false },
@@ -97,9 +109,9 @@ function CompanyProject(props: any) {
         setIsProject(false)
         let option = []
         if (selectoption === '0') {
-            console.log(projectList)
-            setList(projectList)
-        }else if (selectoption === '1') {
+            setIsALL(true)
+        } else if (selectoption === '1') {
+            setIsALL(false)
             option.push(
                 <>
                 <Select
@@ -116,6 +128,7 @@ function CompanyProject(props: any) {
                 </>
             )
         } else if (selectoption === '2') {
+            setIsALL(false)
             option.push(
                 <Select style={{ width: '200px', marginLeft: '20px' }} onChange={(e: any) => ChangeOption("type", e)}  >
                     <option value='Tunnel'>Tunnel</option>
@@ -126,8 +139,11 @@ function CompanyProject(props: any) {
                 </Select>
             )
         } else {
+            setIsALL(false)
             option.push(
-                <input type='datetime-local' style={{width:"380px", marginLeft:"10px", marginRight:'10px', borderRadius:'5px'}} onChange={(e:any)=>ChangeOption("create", e)} ></input>
+                <DatePicker onChange={(e: any) => ChangeOption("create", e)}
+                style={{ width: "380px", marginLeft: "10px", marginRight: '10px', borderRadius: '5px', 'borderColor':'rgba(0, 0, 0, 0)','display':'block'}}/>
+                // <input type='date' style={{ width: "380px", marginLeft: "10px", marginRight: '10px', borderRadius: '5px', 'borderColor':'rgba(0, 0, 0, 0)','display':'block'}} onChange={(e:any)=>ChangeOption("create", e)} ></input>
             )
         }
         setOptionList(option)
@@ -145,8 +161,7 @@ function CompanyProject(props: any) {
                 }
             })
             console.log(projectSearch)
-            setSelectProject(projectSearch)
-            setTest(projectSearch);
+            setSelectList(projectSearch);
 
            
         } else if (str === 'type') {
@@ -159,11 +174,16 @@ function CompanyProject(props: any) {
                 }
             })
             
-            setTest(projectSearch)
+            setSelectList(projectSearch)
            
         } else {
-            console.log(str, e.target.value)
-            console.log(moment(e.target.value).format('YYYY-MM-DD'))
+            projectList?.map((item: any) => {
+                if (item.createdAt <=moment(e.$d).format('YYYY-MM-DD')) {
+                    projectSearch.push(item)
+                    setIsProject(true)
+                }
+            })
+            setSelectList(projectSearch)
         }
     }
     
@@ -223,7 +243,7 @@ function CompanyProject(props: any) {
                                         </div>
                                         {
                                             (!isProject) ? <DataGrid cols={columns} data={list} size={10} onRowClicked={onRowClick} fontsize={12} /> :
-                                            <><DataGrid cols={columns} data={test} size={10} onRowClicked={onRowClick} fontsize={12} /></> 
+                                            <><DataGrid cols={columns} data={selectList} size={10} onRowClicked={onRowClick} fontsize={12} /></> 
                                         }
                                         
                                     </>
